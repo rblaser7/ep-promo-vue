@@ -3,9 +3,9 @@
     <h1>Ryan Blaser Music</h1>
     <nav>
         <ul>
-            <li v-bind:class="{active: isActive('home')}" v-on:click="setActive('home')"><router-link to="/">Home</router-link></li>
-            <li v-bind:class="{active: isActive('about')}" v-on:click="setActive('about')"><router-link to="/about">About</router-link></li>
-            <li v-bind:class="{active: isActive('music')}" class="dropdown" v-on:click="setActive('music')">
+            <li v-bind:class="{active: isActive('home')}"><router-link to="/">Home</router-link></li>
+            <li v-bind:class="{active: isActive('about')}"><router-link to="/about">About</router-link></li>
+            <li v-bind:class="{active: isActive('music')}" class="dropdown">
                 <router-link class="dropbtn" to="/music">Music</router-link>
                 <div class="dropdown-content">
                     <router-link to="/music/epitome">The Epitome of Productivity</router-link>
@@ -13,7 +13,7 @@
                     <router-link to="/music/instrument">An Instrument in Thy Hands</router-link>
                 </div>
             </li>
-            <li v-bind:class="{active: isActive('downloads')}" v-on:click="setActive('downloads')"><router-link to="/downloads">Downloads</router-link></li>
+            <li v-bind:class="{active: isActive('downloads')}"><router-link to="/downloads">Downloads</router-link></li>
         </ul>
     </nav>
   </div>  
@@ -27,10 +27,7 @@
      },
      methods: {
         isActive: function (item) {
-            return this.activeItem === item;
-        },
-        setActive: function (item) {
-            this.activeItem = item;
+            return this.$store.getters.activeTab === item;
         }
     },
 

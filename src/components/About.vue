@@ -8,10 +8,10 @@
                     Ryan Blaser is an up-and-coming artist from Phoenix, AZ. He was formerly
                     a member of the band BDBO, but has since gone solo, looking to shift his 
                     style. Since then, he has produced three albums, including his newest EP 
-                    the Epitome of Productivity. Ryan is a prolific songwriter, an inspired 
-                    audio engineer, and an accomplished musician. The tracks for each of the 
-                    instruments and vocals recorded were done by Ryan himself. Check out some 
-                    of his music in the Music section!
+                    <router-link to="/music/epitome">The Epitome of Productivity</router-link>. 
+                    Ryan is a prolific songwriter, an inspired audio engineer, and an accomplished 
+                    musician. The tracks for each of the instruments and vocals recorded were done 
+                    by Ryan himself. Check out some of his music in the <router-link to="/music">Music section</router-link>!
                 </p>
             </aside>
             <article class="home">
@@ -24,6 +24,9 @@
 <script>
 export default {
   name: 'About',
+  created: function() {
+      this.$store.dispatch('setActiveTab', 'about');
+  },
   data () {
     return {
         

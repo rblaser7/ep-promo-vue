@@ -8,10 +8,10 @@
         </aside>
         <article class="home announcements">
             <h2 class="title">{{title}}</h2>
-                <h4>Be one of the first to get Ryan's new EP,<br>The Epitome of Productivity.</h4>
-                <h4>Check out some of Ryan's other albums!</h4>
-                <h4>Learn a little more about Ryan on the About page.</h4>
-                <h4>Request a Download of one of Ryan's recent releases.</h4>
+                <h4>Be one of the first to get Ryan's new EP,<br><router-link to="/music/epitome">The Epitome of Productivity.</router-link></h4>
+                <h4>Check out some of Ryan's other albums <router-link to="/music">here</router-link>!</h4>
+                <h4>Learn a little more about Ryan on the <router-link to="/about">About page.</router-link></h4>
+                <h4><router-link to="/downloads">Request a Download</router-link> of one of Ryan's recent releases.</h4>
         </article>
     </section>
   </div>
@@ -20,6 +20,9 @@
 <script>
 export default {
   name: 'HomePage',
+  created: function() {
+      this.$store.dispatch('setActiveTab', 'home');
+  },
   data () {
     return {
       title: "Announcements"

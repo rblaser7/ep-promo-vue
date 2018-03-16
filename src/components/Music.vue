@@ -22,6 +22,9 @@
 <script>
 export default {
   name: 'Music',
+  created: function() {
+      this.$store.dispatch('setActiveTab', 'music');
+  },
   data () {
     return {
       epitome: {

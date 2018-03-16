@@ -3,28 +3,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
         <h2>Request a Download</h2>
         <div class="requestForm">
-            <form>
+            <form v-on:submit.prevent="submitHandler">
                 <label for="name">Name:</label>
-                <input id="name" name="name" type="text">
+                <input id="name" name="name" type="text" v-model="name">
                 <br>
                 <label for="email">Email:</label>
-                <input id="email" name="email" type="text">
+                <input id="email" name="email" type="text" v-model="email">
                 <br>
                 <label for="message">Message:</label>
-                <textarea id="message" name="message"></textarea>
+                <textarea id="message" name="message" v-model="message"></textarea>
                 <br>
                 <br>
-                <input id="epitome" name="epitome" type="checkbox">
+                <input id="epitome" name="epitome" type="checkbox" v-model="epOn">
                 <label for="epitome" class="epitome">Epitome of Productivity</label>
                 <br>
-                <input id="mistletoe" name="mistletoe" type="checkbox">
+                <input id="mistletoe" name="mistletoe" type="checkbox" v-model="msOn">
                 <label for="mistletoe" class="mistletoe">Under the Mistletoe</label>
                 <br>
-                <input id="instrument" name="instrument" type="checkbox">
+                <input id="instrument" name="instrument" type="checkbox"  v-model="ihOn">
                 <label for="instrument" class="instrument">An Instrument in Thy Hands</label>
                 <br>
                 <br>
-                <input type="submit" id="submit" name="submit" v-on:submit.prevent>
+                <input type="submit" id="submit" name="submit">
             </form>
         </div>
     </div>
@@ -33,14 +33,28 @@
 <script>
 export default {
   name: 'Downloads',
+  created: function() {
+      this.$store.dispatch('setActiveTab', 'downloads');
+  },
   data () {
     return {
-      
+        name: '',
+        email: '',
+        message: '',
+        epOn: false,
+        msOn: false,
+        ihOn: false
     }
   },
   methods: {
-      submitHandler: ($event) => {
-          $event.preventDefault();
+      submitHandler: function() {
+        alert("Thank you for your request!");
+        this.name = '';
+        this.email = '';
+        this.message = '';
+        this.epOn = false;
+        this.msOn = false;
+        this.ihOn = false;
       }
   }
 }
