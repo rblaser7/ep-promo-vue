@@ -4,24 +4,30 @@
         <h2>Request a Download</h2>
         <div class="requestForm">
             <form v-on:submit.prevent="submitHandler">
-                <label for="name">Name:</label>
-                <input id="name" name="name" type="text" v-model="name">
+                <!-- <label for="name">Name:</label> -->
+                <input id="name" name="name" type="text" v-model="name" placeholder="Name">
                 <br>
-                <label for="email">Email:</label>
-                <input id="email" name="email" type="text" v-model="email">
+                <!-- <label for="email">Email:</label> -->
+                <input id="email" name="email" type="text" v-model="email" placeholder="Email">
                 <br>
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" v-model="message"></textarea>
+                <!-- <label for="message">Message:</label> -->
+                <textarea id="message" name="message" v-model="message" placeholder="Message"></textarea>
                 <br>
                 <br>
-                <input id="epitome" name="epitome" type="checkbox" v-model="epOn">
-                <label for="epitome" class="epitome">Epitome of Productivity</label>
+                <div class="checkbox">
+                    <input id="epitome" name="epitome" type="checkbox" v-model="epOn">
+                    <label for="epitome" class="epitome">Epitome of Productivity</label>
+                </div>
                 <br>
-                <input id="mistletoe" name="mistletoe" type="checkbox" v-model="msOn">
-                <label for="mistletoe" class="mistletoe">Under the Mistletoe</label>
+                <div class="checkbox">
+                    <input id="mistletoe" name="mistletoe" type="checkbox" v-model="msOn">
+                    <label for="mistletoe" class="mistletoe">Under the Mistletoe</label>
+                </div>
                 <br>
-                <input id="instrument" name="instrument" type="checkbox"  v-model="ihOn">
-                <label for="instrument" class="instrument">An Instrument in Thy Hands</label>
+                <div class="checkbox">
+                    <input id="instrument" name="instrument" type="checkbox"  v-model="ihOn">
+                    <label for="instrument" class="instrument">An Instrument in Thy Hands</label>
+                </div>
                 <br>
                 <br>
                 <input type="submit" id="submit" name="submit">
@@ -79,18 +85,21 @@ form {
 
 form label {
     display: inline-block;
-    width: 90px;
-    text-align: right;
 }
 
-.epitome, .mistletoe, .instrument {
+/* .epitome, .mistletoe, .instrument {
     width: 250px;
     text-align: left;
+} */
+.checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 [type="checkbox"] {
     margin: 10px;
-    margin-right: 25px;
+    /* margin-right: 25px; */
 }
 
 form input[type="text"], form textarea {
@@ -100,7 +109,7 @@ form input[type="text"], form textarea {
     border: 1px solid #333333;
     margin: 5px;
     padding: 5px;
-    margin-right: 5em;
+    /* margin-right: 5em; */
 }
 
 form input:focus, form textarea:focus {
@@ -112,9 +121,9 @@ form textarea {
     height: 5em;
 }
 
-form label[for="message"] {
-    padding-top: 5px
-}
+/* form label[for="message"] {
+     padding-top: 5px
+} */
 
 form #submit {
     margin-top: 1em;
