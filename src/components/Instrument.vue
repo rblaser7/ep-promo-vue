@@ -16,16 +16,19 @@
             </article>
         </section>
         <h3>Reviews</h3>
-        <div class="review-input">
-            <input placeholder="Name" v-model="reviewer">
+        <div class="review-input" v-if="loggedIn">
             <textarea v-model="reviewText" placeholder="Review An Instrument in Thy Hands here!"></textarea>
             <button v-on:click="addReview()">Add Review</button>
         </div>
+        <div v-else>
+            <p>Log in to write a review!</p>
+        </div>
         <ul>
             <li :key="i" v-for="(review, i) in reviews" class="review" :class="{ border: i != 0 }">
-                <button v-on:click="deleteReview(review)" class="delete">X</button>
-                <p contenteditable="true" @input="editReview($event, review)">{{review.text}}</p>
-                <p class="reviewer">~ {{review.reviewer}} ~</p><p class="date">{{new Date(review.date).getMonth() + 1}}/{{new Date(review.date).getDate()}}/{{new Date(review.date).getFullYear()}}</p>
+                <button v-if="review.name === user.name" v-on:click="deleteReview(review)">X</button>
+                <p class="text" v-if="editable(review)" contenteditable="true" @input="editReview($event, review)">{{review.review}}</p>
+                <p class="text" v-else>{{review.review}}</p>
+                <p class="reviewer">~ {{review.name}} ~</p><p class="date">{{new Date(review.created).getMonth() + 1}}/{{new Date(review.created).getDate()}}/{{new Date(review.created).getFullYear()}}</p>
             </li>
         </ul>
     </div>
@@ -54,13 +57,18 @@ export default {
             "I'm Trying to Be like Jesus",
             "Lord, I Would Follow Thee",
         ],
-        reviewText: '',
-        reviewer: ''
+        reviewText: ''
     }
   },
   computed: {
       reviews: function() {
           return this.$store.getters.instrumentReviews;
+      },
+      loggedIn: function() {
+          return this.$store.getters.loggedIn;
+      },
+      user: function() {
+          return this.$store.getters.user;
       }
   },
   created: function() {
@@ -72,25 +80,21 @@ export default {
         this.$store.dispatch('getReviews', 'instrument');
       },
       addReview: function() {
-          let reviewer = this.reviewer;
-          let text = this.reviewText;
-          this.reviewText = '';
-          this.reviewer = '';
-       this.$store.dispatch('addReview',{
-         reviewer: reviewer,
-         text: text,
-         date: Date.now(),
-         album: 'instrument'         
-       });
+        let id = this.user[id];
+        let text = this.reviewText;
+        this.reviewText = '';
+        this.$store.dispatch('addReview',{
+            id: id,
+            text: text,
+            album: 'instrument'         
+        });
      },
      editReview: function(event, review) {
-       this.$store.dispatch('updateReview',{
-         id: review.id,
-         reviewer: review.reviewer,
-         text: event.target.innerText,
-         date: Date.now(),
-         album: 'instrument'
-       });
+        this.$store.dispatch('updateReview',{
+            id: review.id,
+            text: event.target.innerText,
+            album: 'instrument'
+        });
      },
      deleteReview: function(review) {
        this.$store.dispatch('deleteReview',{
@@ -98,6 +102,9 @@ export default {
          album: 'instrument'
        });
      },
+      editable: function(review) {
+        return this.loggedIn && this.user.name === review.name;
+      }
   },
 }
 </script>

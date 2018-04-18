@@ -1,5 +1,17 @@
 <template>
 <div class="header">
+    <div class="loginInfo">
+        <div class="flexWrapper errorPlace">
+        <p v-if="loginError" class="flexRight error">{{loginError}}</p>
+        </div>
+        <div class="right" v-if="loggedIn">{{user.name}}</div>
+        <div class="right" v-if="loggedIn"><a @click="logout" href="#">Logout</a></div>
+        <form v-else v-on:submit.prevent="login">
+            <input v-model="email" placeholder="Email Address">
+            <input v-model="password" type="password" placeholder="Password">
+            <button class="primary" type="submit">Login</button>
+        </form>
+    </div>
     <h1>Ryan Blaser Music</h1>
     <nav>
         <ul>
@@ -14,6 +26,7 @@
                 </div>
             </li>
             <li v-bind:class="{active: isActive('downloads')}"><router-link to="/downloads">Downloads</router-link></li>
+            <li v-if="!loggedIn" v-bind:class="{active: isActive('register')}"><router-link to="/register">Register</router-link></li>
         </ul>
     </nav>
   </div>  
@@ -22,25 +35,49 @@
 <script>
  export default {
      name: 'AppHeader',
+     data () {
+        return {
+            activeItem : 'home',
+            email: '',
+            password: '',
+        }
+     },
      computed: {
-        
+        user: function() {
+            return this.$store.getters.user;
+        },
+        loggedIn: function() {
+            return this.$store.getters.loggedIn;
+        },
+        loginError: function() {
+            return this.$store.getters.loginError;
+        },
      },
      methods: {
+        login: function() {
+            this.$store.dispatch('login',{
+                email: this.email,
+                password: this.password,
+            }).then(user => {
+                this.email = '';
+                this.password = '';
+            });
+        },
+        logout: function() {
+            this.$store.dispatch('logout');
+        },
         isActive: function (item) {
             return this.$store.getters.activeTab === item;
         }
-    },
-
-     data () {
-         return {
-             activeItem : 'home'
-         }
-    }
-     
+    }     
  }
 </script>
 
 <style scoped>
+
+.errorPlace {
+    color: whitesmoke;
+}
 
 nav {
     background-color: #A51216;
@@ -107,6 +144,10 @@ nav li.active {
     margin-top: 12px;
 }
 
+h1 {
+    margin: 0
+}
+
 @media only screen and (max-width: 600px) {
     nav li {
         display: inline-block;
@@ -116,6 +157,42 @@ nav li.active {
     h1 {
         font-size: 20px
     }
+}
+
+.loginInfo {
+    text-align: right;
+    display: block;
+    margin-right: 1em;
+}
+
+.loginInfo button {
+    font: 15px sans-serif;
+    margin: 1em;
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color:  	#A51216;
+    width: 80px;
+}
+
+.loginInfo input {
+    font: 15px sans-serif;
+    width: 200px;
+    box-sizing: border-box;
+    border: 1px solid #333333;
+    margin: 3px;
+    padding: 3px;
+}
+
+.loginInfo .right {
+    font-size: 20px;
+    color: whitesmoke;
+}
+
+.errorPlace {
+    margin-right: 15px
 }
 
 </style>

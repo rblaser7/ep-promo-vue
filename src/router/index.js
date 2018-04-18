@@ -7,6 +7,7 @@ import Downloads from '@/components/Downloads'
 import Epitome from '@/components/Epitome'
 import Instrument from '@/components/Instrument'
 import Mistletoe from '@/components/Mistletoe'
+import Register from '@/components/Register'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/downloads',
       name: 'Downloads',
       component: Downloads
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
   ]
 })
